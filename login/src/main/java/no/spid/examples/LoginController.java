@@ -29,7 +29,8 @@ public class LoginController {
     private SpidApiClient spidClient;
 
     public LoginController() throws IOException {
-        // Create a spid API client, the client itself is immutable and can safely be shared in a multithreaded environment
+        /** Create user client */
+        // The client itself is immutable and can safely be shared in a multithreaded environment
         Properties prop = loadProperties("config.properties");
         spidClient = new SpidApiClient.ClientBuilder(
                 prop.getProperty("clientId"),
@@ -37,35 +38,40 @@ public class LoginController {
                 prop.getProperty("clientSignatureSecret"),
                 prop.getProperty("ourBaseUrl"),
                 prop.getProperty("spidBaseUrl")).build();
+        /**/
     }
 
     @RequestMapping("/")
     @ResponseBody
     String index(HttpServletRequest request) throws SpidOAuthException, SpidApiException {
-        SpidOAuthToken token = (SpidOAuthToken)request.getSession().getAttribute("userToken");
+        JSONObject user = (JSONObject)request.getSession().getAttribute("userInfo");
 
-        if ( token != null) {
-            // Use the access token to get info about the user
-            SpidApiResponse response = spidClient.GET(token, "/me", null);
-            JSONObject data = response.getJsonData();
-
-            return "Hello " + data.getString("displayName") + ". Want to log out? <a href=\"/logout\">Click here!</a>";
+        if ( user != null) {
+            return "Hello " + user.getString("displayName") + ". Want to log out? <a href=\"/logout\">Click here!</a>";
         } else {
-            // Create a login URL
+            /** Build login URL */
             String loginUrl = spidClient.getAuthorizationURL("http://localhost:8080/login");
+            /**/
             return "<a href=\"" + loginUrl + "\">Click here to login with SPiD</a>";
         }
     }
 
+    /** Fetch user information and add to session */
     @RequestMapping("/login")
-    String login( @RequestParam String code, HttpServletRequest request) throws SpidOAuthException {
+    String login( @RequestParam String code, HttpServletRequest request) throws SpidOAuthException, SpidApiException {
         // Retrieve this users access token
         SpidOAuthToken token = spidClient.getUserToken(code);
-        // Save it in session
+        // Use the access token to get info about the user
+        SpidApiResponse response = spidClient.GET(token, "/me", null);
+        JSONObject user = response.getJsonData();
+
+        // Save token and info in session
         request.getSession().setAttribute("userToken", token);
+        request.getSession().setAttribute("userInfo", user);
 
         return "redirect:/";
     }
+    /**/
 
     /** Log user out */
     @RequestMapping("/logout")
@@ -74,6 +80,7 @@ public class LoginController {
         String logoutURL = spidClient.getLogoutURL( token, "http://localhost:8080");
 
         request.getSession().removeAttribute("userToken");
+        request.getSession().removeAttribute("userInfo");
 
         return "redirect:" + logoutURL;
     }
