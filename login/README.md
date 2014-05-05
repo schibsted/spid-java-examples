@@ -17,7 +17,7 @@ A Java bare-minimum implementation of SSO with SPiD.
 3. **Start the server**
 
    ```sh
-   mvn package && java -jar target/spp-sso-example-1.0.0.jar
+   mvn package && java -jar target/spid-login-example-1.0.0.jar
    ```
 
 You'll find the example at http://localhost:8080/
