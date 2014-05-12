@@ -1,5 +1,5 @@
 package no.spid.examples;
-
+/** Getting started */
 import no.spid.api.client.SpidApiClient;
 import no.spid.api.exceptions.SpidApiException;
 import no.spid.api.exceptions.SpidOAuthException;
@@ -33,3 +33,4 @@ public class GettingStarted {
         }
     }
 }
+/**/
