@@ -4,7 +4,7 @@ A Java bare-minimum implementation of SSO with SPiD.
 
 ## Usage
 
-**Fill in the configuration**
+1. **Fill in the configuration**
 
    ```sh
    cd login/src/main/resources/
@@ -14,7 +14,7 @@ A Java bare-minimum implementation of SSO with SPiD.
 
    Replace `clientID` and `clientSecret` with your own credentials.
 
-3. **Start the server**
+2. **Start the server**
 
    ```sh
    mvn package && java -jar target/spid-login-example-1.0.0.jar
