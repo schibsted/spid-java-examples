@@ -7,11 +7,11 @@ The following is a minimal example of using the Java API client. It fetches the
 
 ## Usage
 
-   ```sh
-   mvn install -q exec:java -Dexec.mainClass="no.spid.examples.GettingStarted" -Dexec.args="<client-id> <secret>" -e
-   ```
+```sh
+mvn install -q exec:java -Dexec.mainClass="no.spid.examples.GettingStarted" -Dexec.args="<client-id> <secret>" -e
+```
 
-   Replace pointy bracketed items with your credentials.
+Replace pointy bracketed items with your credentials.
 
 This will print the JSON-decoded response from the server, which shows all
 available endpoints along with details on how to interact with them.
