@@ -20,4 +20,4 @@ A Java bare-minimum implementation of Paylinks with SPiD.
    mvn package && java -jar target/spid-paylinks-example-1.0.0.jar
    ```
 
-You'll find the example at http://localhost:8081/
+You'll find the example at http://localhost:8080/
