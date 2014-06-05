@@ -1,6 +1,6 @@
 # SPiD Java SSO example
 
-A Java bare-minimum implementation of SSO with SPiD.
+A bare-minimum Java implementation of SSO with SPiD.
 
 ## Usage
 

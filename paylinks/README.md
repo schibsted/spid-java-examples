@@ -1,6 +1,6 @@
 # SPiD Java Paylinks example
 
-A Java bare-minimum implementation of Paylinks with SPiD.
+A bare-minimum Java implementation of Paylinks with SPiD.
 
 ## Usage
 
