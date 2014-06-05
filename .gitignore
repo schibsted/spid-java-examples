@@ -1,3 +1,5 @@
-getting-started/target
-login/target
+/getting-started/target
+/login/target
 /login/src/main/resources/config.properties
+/paylinks/target
+/paylinks/src/main/resources/config.properties
