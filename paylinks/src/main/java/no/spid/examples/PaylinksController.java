@@ -29,12 +29,15 @@ import java.util.*;
 public class PaylinksController {
     private SpidApiClient spidClient;
 
+    /** The entirety of our product catalog right here */
     private static Map<String, Product> products = new HashMap<String, Product>(){{
             put("sw4", new Product("Star Wars IV", 9900, 2400));
             put("sw5", new Product("Star Wars V", 9900, 2400));
             put("sw6", new Product("Star Wars VI", 9900, 2400));
         }};
+    /**/
 
+    /** Order status codes */
     private static Map<String, String> orderStatus = new HashMap<String, String>(){{
             put("-3", "Expired");
             put("-2", "Cancelled");
@@ -45,6 +48,7 @@ public class PaylinksController {
             put("3", "Credited");
             put("4", "Authorized");
         }};
+    /**/
 
     private static Gson gson = new Gson();
 
@@ -52,6 +56,7 @@ public class PaylinksController {
 
     public PaylinksController() throws IOException {
         // The client itself is immutable and can safely be shared in a multithreaded environment
+        /** Create SPiD client */
         Properties prop = loadProperties("config.properties");
         spidClient = new SpidApiClient.ClientBuilder(
                 prop.getProperty("clientId"),
@@ -59,7 +64,7 @@ public class PaylinksController {
                 prop.getProperty("clientSignatureSecret"),
                 prop.getProperty("ourBaseUrl"),
                 prop.getProperty("spidBaseUrl")).build();
-
+        /**/
         ourBaseUrl = prop.getProperty("ourBaseUrl");
     }
 
@@ -68,11 +73,13 @@ public class PaylinksController {
         return "index";
     }
 
+    /** Create Paylink and redirect to SPiD */
     @RequestMapping("/checkout")
     String checkout(@RequestParam Map<String, String> params) throws SpidOAuthException, SpidApiException {
         JSONObject paylink = createPaylink(getPaylinkItems(params));
         return "redirect:" + paylink.get("shortUrl");
     }
+    /**/
 
     @RequestMapping("/success")
     @ResponseBody
@@ -95,18 +102,23 @@ public class PaylinksController {
             "</p>";
     }
 
+    /** Fetch order info */
     private JSONObject getOrder(String orderId) throws SpidOAuthException, SpidApiException {
         SpidOAuthToken token = spidClient.getServerToken();
         SpidApiResponse response = spidClient.GET(token, "/order/" + orderId + "/status", null);
         return response.getJsonData();
     }
+    /**/
 
+    /** Create Paylink */
     private JSONObject createPaylink(List<PaylinkItem> items) throws SpidOAuthException, SpidApiException {
         SpidOAuthToken token = spidClient.getServerToken();
         SpidApiResponse response = spidClient.POST(token, "/paylink", createPaylinkData(items));
         return response.getJsonData();
     }
+    /**/
 
+    /** Create data to POST to /paylink */
     private Map createPaylinkData(List<PaylinkItem> items) {
         Map data = new HashMap();
         data.put("title", "Quality movies");
@@ -128,6 +140,7 @@ public class PaylinksController {
         }
         return items;
     }
+    /**/
 
     private Properties loadProperties(String filename) throws IOException {
         Properties prop = new Properties();
