@@ -1,5 +1,2 @@
-/getting-started/target
-/sso/target
-/sso/src/main/resources/config.properties
-/paylinks/target
-/paylinks/src/main/resources/config.properties
+target
+config.properties
