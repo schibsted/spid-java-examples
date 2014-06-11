@@ -7,9 +7,9 @@ A bare-minimum Java implementation of SSO with SPiD.
 1. **Fill in the configuration**
 
    ```sh
-   cd login/src/main/resources/
+   cd sso/src/main/resources/
    cp config.properties.sample config.properties
-   vim config.properties
+   vi config.properties
    ```
 
    Replace `clientID` and `clientSecret` with your own credentials.
@@ -17,7 +17,7 @@ A bare-minimum Java implementation of SSO with SPiD.
 2. **Start the server**
 
    ```sh
-   mvn package && java -jar target/spid-login-example-1.0.0.jar
+   mvn package && java -jar target/spid-sso-example-1.0.0.jar
    ```
 
 You'll find the example at http://localhost:8080/

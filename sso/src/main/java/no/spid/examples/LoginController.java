@@ -50,16 +50,16 @@ public class LoginController {
             return "Hello " + user.getString("displayName") + ". Want to log out? <a href=\"/logout\">Click here!</a>";
         } else {
             /** Build login URL */
-            String loginUrl = spidClient.getAuthorizationURL("http://localhost:8080/login");
+            String loginUrl = spidClient.getAuthorizationURL("http://localhost:8080/create-session");
             /**/
             return "<a href=\"" + loginUrl + "\">Click here to login with SPiD</a>";
         }
     }
 
     /** Fetch user information and add to session */
-    @RequestMapping("/login")
-    String login( @RequestParam String code, HttpServletRequest request) throws SpidOAuthException, SpidApiException {
-        // Retrieve this users access token
+    @RequestMapping("/create-session")
+    String createSession( @RequestParam String code, HttpServletRequest request) throws SpidOAuthException, SpidApiException {
+        // Retrieve this user's access token
         SpidOAuthToken token = spidClient.getUserToken(code);
         // Use the access token to get info about the user
         SpidApiResponse response = spidClient.GET(token, "/me", null);
