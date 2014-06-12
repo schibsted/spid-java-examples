@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <title>Success!</title>
+  </head>
+  <!-- Simple receipt -->
+  <body>
+    <h1>Success!</h1>
+    <p>
+      Order <span th:text="${clientReference}">#???</span> is
+      <strong><span th:text="${status}"></span></strong>
+    </p>
+    <p>
+      Captured <span th:text="${currency}"></span> <span th:text="${capturedAmount}"></span>
+      from <span th:text="${paymentIdentifierType}"></span>.
+    </p>
+  </body>
+  <!---->
+</html>
