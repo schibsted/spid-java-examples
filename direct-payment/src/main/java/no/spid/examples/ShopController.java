@@ -72,6 +72,7 @@ public class ShopController extends BaseController {
         return "receipt";
     }
 
+    /** Preparing order data for the receipt view */
     private void populateOrderModel(JSONObject order, Map<String, Object> model) {
         model.put("clientReference", order.get("clientReference"));
         model.put("status", orderStatus.get(order.getString("status")));
@@ -80,6 +81,7 @@ public class ShopController extends BaseController {
         model.put("paymentIdentifierType",
                   paymentIdentifierType.get(order.getString("identifierType")));
     }
+    /**/
 
     /** Attempting the direct payment, with a Paylink fallback */
     @RequestMapping("/checkout")
@@ -138,7 +140,7 @@ public class ShopController extends BaseController {
     }
     /**/
 
-    /** Direct charge */
+    /** Create data to POST to /user/{userId}/charge */
     private JSONObject chargeOrder(JSONObject user, List<OrderItem> items) throws SpidOAuthException, SpidApiException {
         SpidOAuthToken token = getSpidClient().getServerToken();
         SpidApiResponse response = getSpidClient().POST(token,
@@ -146,9 +148,7 @@ public class ShopController extends BaseController {
                                                         createOrderData(items));
         return response.getJsonData();
     }
-    /**/
 
-    /** Create data to POST to /user/{userId}/charge */
     private Map createOrderData(List<OrderItem> items) throws SpidApiException {
         Map<String, String> data = new HashMap<String, String>();
         data.put("requestReference", "Order #" + System.currentTimeMillis());

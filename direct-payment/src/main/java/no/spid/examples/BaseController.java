@@ -24,7 +24,9 @@ public class BaseController {
                     prop.getProperty("clientSignatureSecret"),
                     prop.getProperty("ourBaseUrl"),
                     prop.getProperty("spidBaseUrl")).build();
+            /** Creating the security helper */
             security = new SpidSecurityHelper(prop.getProperty("clientSignatureSecret"));
+            /**/
             ourBaseUrl = prop.getProperty("ourBaseUrl");
         } catch (IOException e) {
             System.err.println("Failed to load configuration " + e.getMessage());
@@ -36,9 +38,11 @@ public class BaseController {
         return ourBaseUrl;
     }
 
+    /** Signing parameters */
     public void signParams(Map<String, String> params) throws SpidApiException {
         security.addHash(params);
     }
+    /**/
 
     public SpidApiClient getSpidClient() {
         return spidClient;
