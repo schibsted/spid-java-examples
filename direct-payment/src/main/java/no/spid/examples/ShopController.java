@@ -91,7 +91,8 @@ public class ShopController extends BaseController {
         JSONObject user = (JSONObject) request.getSession().getAttribute("userInfo");
 
         try {
-            populateOrderModel(chargeOrder(user, getOrderItems(params)), model);
+            JSONObject order = chargeOrder(user, getOrderItems(params));
+            populateOrderModel(order, model);
             return "receipt";
         } catch (SpidApiException err) {
             JSONObject paylink = createPaylink(getPaylinkItems(params));
