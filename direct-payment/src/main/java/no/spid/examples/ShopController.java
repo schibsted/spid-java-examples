@@ -93,7 +93,7 @@ public class ShopController extends BaseController {
         try {
             populateOrderModel(chargeOrder(user, getOrderItems(params)), model);
             return "receipt";
-        } catch (Exception err) {
+        } catch (SpidApiException err) {
             JSONObject paylink = createPaylink(getPaylinkItems(params));
             return "redirect:" + paylink.get("shortUrl");
         }
