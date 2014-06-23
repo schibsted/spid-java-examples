@@ -59,11 +59,11 @@ public class PaylinksController {
         /** Create SPiD client */
         Properties prop = loadProperties("config.properties");
         spidClient = new SpidApiClient.ClientBuilder(
-                prop.getProperty("clientId"),
-                prop.getProperty("clientSecret"),
-                prop.getProperty("clientSignatureSecret"),
-                prop.getProperty("ourBaseUrl"),
-                prop.getProperty("spidBaseUrl")).build();
+                                                     prop.getProperty("clientId"),
+                                                     prop.getProperty("clientSecret"),
+                                                     prop.getProperty("clientSignatureSecret"),
+                                                     prop.getProperty("ourBaseUrl"),
+                                                     prop.getProperty("spidBaseUrl")).build();
         /**/
         ourBaseUrl = prop.getProperty("ourBaseUrl");
     }
@@ -83,15 +83,36 @@ public class PaylinksController {
 
     @RequestMapping("/success")
     @ResponseBody
-    String success(@RequestParam String order_id) throws SpidOAuthException, SpidApiException {
-        JSONObject order = getOrder(order_id);
-        return "<h1>Success!</h1>" +
+    String success(@RequestParam String orderId, HttpServletRequest request) throws SpidOAuthException, SpidApiException {
+        JSONObject user = (JSONObject)request.getSession().getAttribute("userInfo");
+        JSONObject order = getOrder(orderId);
+
+        return "<h1>Welcome back, " + user.getString("displayName") + "!</h1>" +
             "<p>" +
             order.get("clientReference") +
             " is " +
             "<strong>" + orderStatus.get(order.get("status")) + "</strong>" +
             "</p>";
     }
+
+    /** Handle callback from SPiD, make sure we've got the right user */
+    @RequestMapping("/callback")
+    String callback(@RequestParam String code,
+                    @RequestParam String order_id,
+                    HttpServletRequest request) throws SpidOAuthException, SpidApiException {
+        // Retrieve this user's access token
+        SpidOAuthToken token = spidClient.getUserToken(code);
+        // Use the access token to get info about the user
+        SpidApiResponse response = spidClient.GET(token, "/me", null);
+        JSONObject user = response.getJsonData();
+
+        // Save token and info in session
+        request.getSession().setAttribute("userToken", token);
+        request.getSession().setAttribute("userInfo", user);
+
+        return "redirect:/success?orderId=" + order_id;
+    }
+    /**/
 
     @RequestMapping("/cancel")
     @ResponseBody
@@ -122,7 +143,7 @@ public class PaylinksController {
     private Map createPaylinkData(List<PaylinkItem> items) {
         Map data = new HashMap();
         data.put("title", "Quality movies");
-        data.put("redirectUri", ourBaseUrl + "/success");
+        data.put("redirectUri", ourBaseUrl + "/callback");
         data.put("cancelUri", ourBaseUrl + "/cancel");
         data.put("clientReference", "Order number " + System.currentTimeMillis());
         data.put("items", gson.toJson(items));
