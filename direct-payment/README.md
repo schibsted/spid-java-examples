@@ -14,10 +14,9 @@ A bare-minimum Java implementation of direct payment with SPiD.
 
    Replace `clientID` and `clientSecret` with your own credentials.
 
-2. **Start the server**
+2. **Run the recurring payments batch process**
 
    ```sh
    mvn package && java -jar target/spid-direct-payment-example-1.0.0.jar
+   mvn install -q exec:java -Dexec.mainClass="no.spid.examples.RecurringPaymentProcessor" -e
    ```
-
-You'll find the example at http://localhost:8080/
