@@ -15,6 +15,7 @@ public class OrderFormatter {
         }};
     /**/
 
+    /** Preparing order data for the summary */
     public static String format(JSONObject order) {
         float capturedAmount = order.getInt("capturedAmount") / 100;
 
@@ -26,4 +27,5 @@ public class OrderFormatter {
             paymentIdentifierType.get(order.getString("identifierType"))
         );
     }
+    /**/
 }

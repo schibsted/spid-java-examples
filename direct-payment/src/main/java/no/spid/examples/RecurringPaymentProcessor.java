@@ -38,12 +38,14 @@ public class RecurringPaymentProcessor {
 
     private static Gson gson = new Gson();
 
+    /** Attempting the direct payment */
     public JSONObject chargeSubscriber(User user)
         throws SpidApiException, SpidOAuthException {
         Map order = createOrderData(subscription);
         String url = "/user/" + user.userId + "/charge";
         return client.POST(url, order).getJsonData();
     }
+    /**/
 
     /** Create data to POST to /user/{userId}/charge */
     private Map createOrderData(final Subscription subscription) throws SpidApiException {
@@ -59,9 +61,12 @@ public class RecurringPaymentProcessor {
 
     public static void main(String[] args) {
         List<User> users = new ArrayList() {{ add(new User(238342)); }};
+        /** Subscription is an object with name, price and vat */
         Subscription subscription = new Subscription("Ants Monthly", 9900, 2400);
+        /**/
         RecurringPaymentProcessor processor = new RecurringPaymentProcessor(subscription);
 
+        /** Charging the users, and printing a report */
         for (User user: users) {
             try {
                 JSONObject order = processor.chargeSubscriber(user);
@@ -72,5 +77,6 @@ public class RecurringPaymentProcessor {
                 e.printStackTrace();
             }
         }
+        /**/
     }
 }
