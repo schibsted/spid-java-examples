@@ -27,6 +27,7 @@ import java.util.Properties;
 @EnableAutoConfiguration
 public class LoginController {
     private SpidApiClient spidClient;
+    private String ourBaseUrl;
 
     public LoginController() throws IOException {
         /** Create user client */
@@ -39,6 +40,8 @@ public class LoginController {
                 prop.getProperty("ourBaseUrl"),
                 prop.getProperty("spidBaseUrl")).build();
         /**/
+
+        ourBaseUrl = prop.getProperty("ourBaseUrl");
     }
 
     @RequestMapping("/")
@@ -50,7 +53,8 @@ public class LoginController {
             return "Hello " + user.getString("displayName") + ". Want to log out? <a href=\"/logout\">Click here!</a>";
         } else {
             /** Build login URL */
-            String loginUrl = spidClient.getAuthorizationURL("http://localhost:8080/create-session");
+            String redirectURL = ourBaseUrl + "/create-session";
+            String loginUrl = spidClient.getAuthorizationURL(redirectURL);
             /**/
             return "<a href=\"" + loginUrl + "\">Click here to login with SPiD</a>";
         }
