@@ -3,7 +3,7 @@
 The following is a minimal example of using the Java API client. It fetches the
 `/endpoints` endpoint, which returns a description of all available endpoints.
 
-**NB!** To run the example, you need to know your client ID and API secret.
+**NB!** To run the example, you need to know your client ID and API secret. And that ```spidBaseUrl``` points to the environment where your credentials originate from.
 
 ## Usage
 
