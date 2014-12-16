@@ -54,7 +54,7 @@ public class LoginController {
         } else {
             /** Build login URL */
             String redirectURL = ourBaseUrl + "/create-session";
-            String loginUrl = spidClient.getAuthorizationURL(redirectURL);
+            String loginUrl = spidClient.getFlowURL("login", redirectURL);
             /**/
             return "<a href=\"" + loginUrl + "\">Click here to login with SPiD</a>";
         }

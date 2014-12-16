@@ -18,7 +18,7 @@
         <dependency>
             <groupId>no.spid</groupId>
             <artifactId>no.spid.api.client</artifactId>
-            <version>1.2</version>
+            <version>1.4</version>
         </dependency>
 
         <dependency>
