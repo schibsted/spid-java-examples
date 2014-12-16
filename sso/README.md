@@ -21,3 +21,7 @@ A bare-minimum Java implementation of SSO with SPiD.
    ```
 
 You'll find the example at http://localhost:8080/
+
+
+## New Flow URLs
+Version => 1.4 only supports new flow URLs, which is generated with the method getFlowURL(name, redirectURL). Current valid flow names are ``login`` and ``checkout``
