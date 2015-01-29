@@ -1,17 +1,16 @@
 # Getting started with the SPiD Java SDK
 
-The following is a minimal example of using the Java API client. It fetches the
-`/endpoints` endpoint, which returns a description of all available endpoints.
+The following is a minimal example of using the Java API client. It checks the status of the email
+supplied as the third argument.
 
-**NB!** To run the example, you need to know your client ID and API secret. And that ```spidBaseUrl``` points to the environment where your credentials originate from.
+**NB!** To run the example, you need to know your client ID and API secret. The ```spidBaseUrl``` points to the environment where your credentials originate from, set to Norwegian stage by default. If using Swedish credentials you need to update it to reflect that.
 
 ## Usage
 
 ```sh
-mvn install -q exec:java -Dexec.mainClass="no.spid.examples.GettingStarted" -Dexec.args="<client-id> <secret>" -e
+mvn install -q exec:java -Dexec.mainClass="no.spid.examples.GettingStarted" -Dexec.args="<client-id> <secret> <email>" -e
 ```
 
 Replace pointy bracketed items with your credentials.
 
-This will print the JSON-decoded response from the server, which shows all
-available endpoints along with details on how to interact with them.
+This will check the status of the email in SPiD for the environment chosen and print the result to standard output.

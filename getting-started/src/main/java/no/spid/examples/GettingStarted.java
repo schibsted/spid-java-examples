@@ -10,6 +10,10 @@ import org.apache.commons.codec.binary.Base64;
 public class GettingStarted {
 
     public static void main(String[] args) {
+        if(args.length < 3) {
+            System.out.println("Run with arguments <clientId> <clientSecret> <email>");
+            System.exit(0);
+        }
         final String clientId = args[0];
         final String secret = args[1];
         final String signatureSecret = "";
@@ -26,10 +30,10 @@ public class GettingStarted {
 
         try {
          SpidOAuthToken token = client.getServerToken();
-            final String email = "some.email@google.com";   // check to see if this email exists
+            final String email = args[2];   // check to see if this email exists
             String base64EncodedEmail = new String(Base64.encodeBase64(email.getBytes()));
             String responseJSON = client.GET(token, "/email/" + base64EncodedEmail + "/status", null).getRawData();
-            System.out.println(responseJSON);
+            System.out.println("Status of " + email + ": " + responseJSON);
         } catch (SpidOAuthException e) {
             e.printStackTrace();
         } catch (SpidApiException e) {
