@@ -12,7 +12,7 @@
         <dependency>
             <groupId>no.spid</groupId>
             <artifactId>no.spid.api.client</artifactId>
-            <version>1.2c</version>
+            <version>1.4</version>
         </dependency>
     </dependencies>
 </project>
