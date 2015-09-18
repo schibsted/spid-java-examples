@@ -18,7 +18,7 @@ public class GettingStarted {
         final String secret = args[1];
         final String signatureSecret = "";
         final String redirectUrl = "http://localhost:8080";
-        final String spidBaseUrl = "https://stage.payment.schibsted.no";
+        final String spidBaseUrl = "https://identity-pre.schibsted.com";
 
         SpidApiClient client = new SpidApiClient.ClientBuilder(
                 clientId,

@@ -3,7 +3,7 @@
 The following is a minimal example of using the Java API client. It checks the status of the email
 supplied as the third argument.
 
-**NB!** To run the example, you need to know your client ID and API secret. The ```spidBaseUrl``` points to the environment where your credentials originate from, set to Norwegian stage by default. If using Swedish credentials you need to update it to reflect that.
+**NB!** To run the example, you need to know your client ID and API secret. The ```spidBaseUrl``` points to the environment where your credentials originate from, set to stage/pre by default.
 
 ## Usage
 

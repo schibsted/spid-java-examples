@@ -2,4 +2,4 @@ clientId=<Client Id>
 clientSecret=<Client secret>
 clientSignatureSecret=<Client signature secret>
 ourBaseUrl=http://localhost:8080
-spidBaseUrl=https://stage.payment.schibsted.no
+spidBaseUrl=https://identity-pre.schibsted.com
